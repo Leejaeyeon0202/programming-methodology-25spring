@@ -12,7 +12,7 @@ TEST(TodoListTest, AddSingleTask) {
     ASSERT_EQ(count, 1);
     EXPECT_STREQ(tasks[0], "Write code");
 
-    todo.destroy();
+    todo.destroy(); 
 }
 
 TEST(TodoListTest, AddMultipleTasks) {
@@ -57,7 +57,11 @@ TEST(TodoListTest, RemoveInvalidIndexThrows) {
 
     // TODO: Try removing at invalid indices
     // Example: negative index and out-of-bound index
+    // 음수 인덱스
+EXPECT_THROW(todo.remove_task(-1), std::out_of_range);
 
+    // 존재하지 않는 인덱스
+EXPECT_THROW(todo.remove_task(1), std::out_of_range);
     todo.destroy();
 }
 
@@ -67,6 +71,11 @@ TEST(TodoListTest, AddTooManyTasksThrows) {
 
     // TODO: Add exactly 32 tasks in a loop
     // Then try adding a 33rd task and expect an exception
+    for (int i = 0; i < 32; i++) {
+        todo.add_task("Task");
+    }
+
+    EXPECT_THROW(todo.add_task("Overflow Task"), std::overflow_error);
 
     todo.destroy();
 }
